@@ -1,9 +1,11 @@
-import { AlertModal, Button, Input, Modal } from '@/shared/ui';
 import { FC, useRef, useState } from 'react';
-import { Keyboard } from '@/shared/ui/Keyboard';
-import styles from './SendEmailModal.module.scss';
-import { Checkbox } from '@/shared/ui/Checkbox';
 import { useNavigate } from 'react-router-dom';
+
+import { AlertModal, Button, Input, Modal } from '@/shared/ui';
+import { Checkbox } from '@/shared/ui/Checkbox';
+import { Keyboard } from '@/shared/ui/Keyboard';
+
+import styles from './SendEmailModal.module.scss';
 
 interface ISendEmailModalProps {
     isOpen: boolean;
@@ -11,11 +13,13 @@ interface ISendEmailModalProps {
 }
 
 export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose }) => {
-    const navigate = useNavigate();
     const [alertState, setAlertState] = useState<'none' | 'success' | 'error'>('none');
+    const [checked, setChecked] = useState(true);
     const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const onSubmit = () => {
+        if (!checked || !inputRef.current?.value.trim()) return;
         onClose();
         setAlertState('success');
     };
@@ -33,7 +37,8 @@ export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose }) =>
                                 Я согласен на <span>обработку персональных данных</span>
                             </>
                         }
-                        defaultChecked
+                        checked={checked}
+                        onChange={(e) => setChecked(e.target.checked)}
                         className={styles.checkbox}
                     />
                     <div className={styles.buttons}>

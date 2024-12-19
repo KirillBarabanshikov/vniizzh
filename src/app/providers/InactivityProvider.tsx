@@ -15,7 +15,7 @@ export const InactivityProvider: FC<IInactivityProviderProps> = ({ timeout, chil
         }
         timerRef.current = setTimeout(() => {
             navigate('/');
-        }, timeout);
+        }, timeout * 1000);
     };
 
     useEffect(() => {

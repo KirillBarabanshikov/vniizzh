@@ -14,7 +14,6 @@ export const CameraFeed: FC<ICameraFreedProps> = ({ videoRef, className }) => {
     useEffect(() => {
         const startCamera = async () => {
             try {
-                navigator.mediaDevices.enumerateDevices().then((devices) => console.log(devices));
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: {
                         aspectRatio: 16 / 9,

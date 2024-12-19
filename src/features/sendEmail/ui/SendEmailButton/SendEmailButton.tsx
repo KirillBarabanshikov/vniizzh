@@ -1,5 +1,7 @@
 import { FC, useState } from 'react';
+
 import { Button } from '@/shared/ui';
+
 import { SendEmailModal } from '../SendEmailModal';
 
 export const SendEmailButton: FC = () => {

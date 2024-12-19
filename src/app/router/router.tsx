@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { CreatePhoto, Home, ReadyPhoto } from '@/pages';
 import { InactivityProvider } from '@/app/providers';
+import { CreatePhoto, Home, ReadyPhoto } from '@/pages';
 import { INACTIVITY_TIMEOUT } from '@/shared/consts';
 
 export const router = createBrowserRouter([

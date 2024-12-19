@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { SendEmailButton } from '@/features/sendEmail';
 import BackIcon from '@/shared/assets/icons/back.svg?react';
 import { Button, Switch } from '@/shared/ui';
 
 import styles from './ReadyPhoto.module.scss';
-import { SendEmailButton } from '@/features/sendEmail';
 
 export const ReadyPhoto = () => {
     const navigate = useNavigate();
