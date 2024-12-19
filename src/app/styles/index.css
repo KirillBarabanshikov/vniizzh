@@ -51,11 +51,13 @@ h1 {
 }
 
 h2 {
-    font-size: 80px;
+    font-size: 72px;
+    color: #0072ac;
 }
 
 h3 {
-    font-size: 64px;
+    font-size: 54px;
+    color: #0072ac;
 }
 
 .text {

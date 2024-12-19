@@ -1,0 +1,41 @@
+.switchWrap {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    border-radius: 40px;
+    padding: 25px 32px;
+    background: #ffffff;
+
+    .switch {
+        border: 1px solid #b9b9b9;
+        border-radius: 31px;
+        padding: 4px;
+        width: 121px;
+        height: 58px;
+        display: flex;
+        justify-content: flex-start;
+
+        .handle {
+            border-radius: 25px;
+            padding: 12px 18px;
+            width: 49px;
+            height: 49px;
+            background: #b9b9b9;
+        }
+
+        &.isOn {
+            background: #cff0ff;
+            justify-content: flex-end;
+            border-color: transparent;
+
+            .handle {
+                background: linear-gradient(90deg, #85b0ef 0%, #32a1e0 100%);
+            }
+        }
+    }
+
+    .label {
+        font-size: 28px;
+        color: #032a3f;
+    }
+}

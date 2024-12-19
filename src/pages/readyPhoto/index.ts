@@ -1,0 +1,1 @@
+export { ReadyPhoto } from './ReadyPhoto';

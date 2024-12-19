@@ -6,13 +6,39 @@
     height: 98px;
     border-radius: 49px;
     font-family: inherit;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 28px;
-    color: #0b80bf;
-    background-color: #ffffff;
     transition:
         background-color 300ms,
         color 300ms;
+
+    &.solid {
+        &.white {
+            color: #0b80bf;
+            background-color: #ffffff;
+        }
+
+        &.accent {
+            color: #ffffff;
+            background: linear-gradient(166deg, #0b80bf 0%, #68d1ff 100%);
+        }
+    }
+
+    &.sm {
+    }
+
+    &.lg {
+        border-radius: 40px;
+        padding: 32px 77px;
+        width: 559px;
+        height: 170px;
+
+        font-family: var(--second-family);
+        font-weight: 500;
+        font-size: 28px;
+        text-align: center;
+        color: #fff;
+    }
 
     &:disabled {
         pointer-events: none;
