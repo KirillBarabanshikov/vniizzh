@@ -1,1 +1,1 @@
-export { SendEmailButton } from './ui';
+export { SendEmailModal } from './ui';

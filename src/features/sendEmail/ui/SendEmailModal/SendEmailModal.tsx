@@ -10,9 +10,10 @@ import styles from './SendEmailModal.module.scss';
 interface ISendEmailModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onPrint: () => void;
 }
 
-export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose }) => {
+export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose, onPrint }) => {
     const [alertState, setAlertState] = useState<'none' | 'success' | 'error'>('none');
     const [checked, setChecked] = useState(true);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -21,7 +22,7 @@ export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose }) =>
     const onSubmit = () => {
         if (!checked || !inputRef.current?.value.trim()) return;
         onClose();
-        setAlertState('success');
+        setAlertState('error');
     };
 
     return (
@@ -69,13 +70,26 @@ export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose }) =>
                         </>
                     ) : (
                         <>
-                            <Button theme={'accent'} fullWidth>
+                            <Button
+                                theme={'accent'}
+                                fullWidth
+                                onClick={() => {
+                                    setAlertState('none');
+                                    onPrint();
+                                }}
+                            >
                                 Напечатать фото
                             </Button>
                             <Button variant={'outline'} onClick={() => setAlertState('none')}>
                                 Назад
                             </Button>
-                            <Button variant={'outline'} onClick={() => navigate('/')}>
+                            <Button
+                                variant={'outline'}
+                                onClick={() => {
+                                    setAlertState('none');
+                                    navigate('/');
+                                }}
+                            >
                                 На главную
                             </Button>
                         </>

@@ -1,0 +1,23 @@
+.modalBody {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 74px;
+    max-width: 808px;
+
+    h3 {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    p {
+        font-size: 24px;
+        text-align: center;
+        color: #032a3f;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 24px;
+    }
+}

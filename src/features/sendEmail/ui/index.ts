@@ -1,1 +1,1 @@
-export { SendEmailButton } from './SendEmailButton';
+export { SendEmailModal } from './SendEmailModal';
