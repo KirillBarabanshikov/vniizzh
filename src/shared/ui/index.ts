@@ -5,3 +5,5 @@ export { Loader } from './Loader';
 export { Modal } from './Modal';
 export { Switch } from './Switch';
 export { Timer } from './Timer';
+export { Input } from './Input';
+export { Checkbox } from './Checkbox';

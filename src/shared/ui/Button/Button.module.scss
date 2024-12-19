@@ -2,15 +2,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 426px;
-    height: 98px;
-    border-radius: 49px;
-    font-family: inherit;
+    font-family: var(--second-family);
     font-weight: 500;
     font-size: 28px;
     transition:
         background-color 300ms,
         color 300ms;
+    background-color: transparent;
 
     &.solid {
         &.white {
@@ -24,20 +22,25 @@
         }
     }
 
+    &.outline {
+        outline: 2px solid #0b80bf;
+        outline-offset: -2px;
+        color: #0b80bf;
+    }
+
     &.sm {
+        border-radius: 49px;
+        height: 98px;
+        width: 357px;
     }
 
     &.lg {
         border-radius: 40px;
-        padding: 32px 77px;
-        width: 559px;
         height: 170px;
+    }
 
-        font-family: var(--second-family);
-        font-weight: 500;
-        font-size: 28px;
-        text-align: center;
-        color: #fff;
+    &.fullWidth {
+        width: 100% !important;
     }
 
     &:disabled {

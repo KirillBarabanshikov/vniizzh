@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { CreatePhoto, Home, ReadyPhoto } from '@/pages';
+import { InactivityProvider } from '@/app/providers';
+import { INACTIVITY_TIMEOUT } from '@/shared/consts';
 
 export const router = createBrowserRouter([
     {
@@ -13,6 +15,10 @@ export const router = createBrowserRouter([
     },
     {
         path: '/ready-photo',
-        element: <ReadyPhoto />,
+        element: (
+            <InactivityProvider timeout={INACTIVITY_TIMEOUT}>
+                <ReadyPhoto />
+            </InactivityProvider>
+        ),
     },
 ]);

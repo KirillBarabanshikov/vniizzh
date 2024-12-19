@@ -2,12 +2,12 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    max-width: 808px;
+    width: 808px;
 
     .title {
         font-size: 48px;
         margin: 40px 0 24px 0;
-        color: var(--dark);
+        color: #0072ac;
         text-align: center;
         white-space: break-spaces;
     }
@@ -16,11 +16,14 @@
         margin-bottom: 40px;
         color: #373737;
         text-align: center;
+        white-space: break-spaces;
     }
 
     .buttons {
         display: flex;
+        flex-wrap: wrap;
         gap: 24px;
+        padding: 0 34.5px;
 
         button {
             width: 357px;

@@ -5,6 +5,7 @@ import BackIcon from '@/shared/assets/icons/back.svg?react';
 import { Button, Switch } from '@/shared/ui';
 
 import styles from './ReadyPhoto.module.scss';
+import { SendEmailButton } from '@/features/sendEmail';
 
 export const ReadyPhoto = () => {
     const navigate = useNavigate();
@@ -33,9 +34,7 @@ export const ReadyPhoto = () => {
                         <Button theme={'accent'} size={'lg'}>
                             Напечатать фото
                         </Button>
-                        <Button theme={'accent'} size={'lg'}>
-                            Отправить на почту
-                        </Button>
+                        <SendEmailButton />
                     </div>
                 </div>
                 <div className={styles.photo}>

@@ -1,0 +1,60 @@
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    border-radius: 24px;
+    padding: 24px;
+    width: 840px;
+    background: #d1d1d1;
+
+    .row {
+        display: flex;
+        gap: 8px;
+
+        .key {
+            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            background: #ffffff;
+
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 100%;
+            text-align: center;
+            color: #303030;
+
+            &.isCaps {
+                text-transform: uppercase;
+            }
+
+            &.Backspace {
+                background-image: url('@/shared/assets/icons/backspace.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 96px;
+                font-size: 0;
+            }
+
+            &.CapsLock {
+                background-image: url('@/shared/assets/icons/capsLock.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 72px;
+                font-size: 0;
+            }
+
+            &.Enter,
+            &.KeyLang,
+            &.KeyNum {
+                width: 96px;
+                text-transform: initial !important;
+            }
+
+            &.Space {
+                width: 480px;
+            }
+        }
+    }
+}

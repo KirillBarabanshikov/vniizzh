@@ -1,0 +1,14 @@
+.input {
+    width: 100%;
+    height: 88px;
+    border-bottom: 2px solid #dcdcdc;
+    outline: unset;
+
+    font-family: var(--third-family);
+    font-weight: 400;
+    font-size: 28px;
+
+    &::placeholder {
+        color: #a3a3a3;
+    }
+}
