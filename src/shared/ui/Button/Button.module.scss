@@ -1,0 +1,20 @@
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 426px;
+    height: 98px;
+    border-radius: 49px;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 28px;
+    color: #0b80bf;
+    background-color: #ffffff;
+    transition:
+        background-color 300ms,
+        color 300ms;
+
+    &:disabled {
+        pointer-events: none;
+    }
+}

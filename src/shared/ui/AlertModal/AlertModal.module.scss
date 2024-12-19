@@ -1,0 +1,29 @@
+.modalBody {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 808px;
+
+    .title {
+        font-size: 48px;
+        margin: 40px 0 24px 0;
+        color: var(--dark);
+        text-align: center;
+        white-space: break-spaces;
+    }
+
+    .text {
+        margin-bottom: 40px;
+        color: #373737;
+        text-align: center;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 24px;
+
+        button {
+            width: 357px;
+        }
+    }
+}

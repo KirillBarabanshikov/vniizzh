@@ -1,0 +1,22 @@
+.home {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/images/home-bg.png');
+    background-size: cover;
+    padding: 123px 109px;
+
+    .logo {
+        margin-bottom: 43px;
+    }
+
+    .title {
+        max-width: 787px;
+        margin-bottom: 24px;
+    }
+
+    .subtitle {
+        font-size: 30px;
+        max-width: 575px;
+        margin-bottom: 60px;
+    }
+}

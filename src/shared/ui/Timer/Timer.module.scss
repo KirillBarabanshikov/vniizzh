@@ -1,0 +1,22 @@
+.timerWrapper {
+    position: relative;
+    width: 198px;
+    height: 334px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .number {
+        width: 198px;
+        height: 198px;
+        font-family: var(--third-family);
+        font-weight: 700;
+        font-size: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        position: absolute;
+        background-image: url('@/shared/assets/images/timer_bg.png');
+    }
+}

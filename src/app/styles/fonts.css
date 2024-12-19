@@ -1,0 +1,48 @@
+:root {
+    --font-family: 'Myriad Pro', sans-serif;
+    --second-family: 'Montserrat', sans-serif;
+    --third-family: 'Inter', sans-serif;
+    --fourth-family: 'RussianRail G Pro', sans-serif;
+}
+
+@font-face {
+    font-family: 'Myriad Pro';
+    src: url('./fonts/MyriadproRegular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Myriad Pro';
+    src: url('./fonts/MyriadproBold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/MontserratMedium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./fonts/InterRegular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./fonts/InterBold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RussianRail G Pro';
+    src: url('./fonts/RussianRailGProRegular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
