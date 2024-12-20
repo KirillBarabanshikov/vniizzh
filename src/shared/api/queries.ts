@@ -13,9 +13,9 @@ export async function createPhotoHandler() {
     }
 }
 
-export async function printPhotoHandler(path: string) {
+export async function printPhotoHandler({ path, count }: { path: string; count: number }) {
     try {
-        await axios.get(PRINT_PHOTO_HANDLER_URL, { params: { path } });
+        await axios.get(PRINT_PHOTO_HANDLER_URL, { params: { path, count } });
     } catch (error) {
         throw new Error(`Failed to print photo: ${error}`);
     }

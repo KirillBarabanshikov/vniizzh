@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { fetchPhoto } from '@/shared/api';
+import { createPhotoHandler, fetchPhoto } from '@/shared/api';
 import { TIMER } from '@/shared/consts';
 import { CameraFeed, Timer } from '@/shared/ui';
 
@@ -14,9 +14,8 @@ export const CreatePhoto = () => {
     const handleTimerEnd = async () => {
         try {
             videoRef.current?.pause();
-            // const photoName = await createPhotoHandler();
-            // const { originalImage } = await fetchPhoto(photoName || '');
-            const { originalImage } = await fetchPhoto('test.png');
+            const photoName = await createPhotoHandler();
+            const { originalImage } = await fetchPhoto(photoName || '');
             navigate('/ready-photo', { state: originalImage });
         } catch (error) {
             console.error(error);

@@ -1,7 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { MAX_PHOTO_COUNT } from '@/shared/consts';
+import { printPhotoHandler } from '@/shared/api';
+import { API_URL, MAX_PHOTO_COUNT } from '@/shared/consts';
 import { AlertModal, Button, InputCounter, Loader, Modal } from '@/shared/ui';
 
 import styles from './PrintModal.module.scss';
@@ -10,19 +11,28 @@ interface IPrintModalProps {
     isOpen: boolean;
     onClose: () => void;
     onEmail: () => void;
+    currentImage: string;
 }
 
-export const PrintModal: FC<IPrintModalProps> = ({ isOpen, onClose, onEmail }) => {
-    const navigate = useNavigate();
+export const PrintModal: FC<IPrintModalProps> = ({ isOpen, onClose, onEmail, currentImage }) => {
     const [alertState, setAlertState] = useState<'none' | 'loading' | 'success' | 'error'>('none');
+    const [photoCount, setPhotoCount] = useState(1);
+    const navigate = useNavigate();
 
-    const onPrint = () => {
-        onClose();
-        setAlertState('loading');
+    useEffect(() => {
+        setPhotoCount(1);
+    }, [isOpen]);
 
-        setTimeout(() => {
+    const onPrint = async () => {
+        try {
+            onClose();
+            setAlertState('loading');
+            await printPhotoHandler({ path: `${API_URL}/${currentImage}`, count: photoCount });
             setAlertState('success');
-        }, 3000);
+        } catch (error) {
+            console.error(error);
+            setAlertState('error');
+        }
     };
 
     return (
@@ -37,7 +47,7 @@ export const PrintModal: FC<IPrintModalProps> = ({ isOpen, onClose, onEmail }) =
                         defaultCount={1}
                         min={1}
                         max={MAX_PHOTO_COUNT}
-                        onChange={(count) => console.log(count)}
+                        onChange={(count) => setPhotoCount(count)}
                     />
                     <div className={styles.buttons}>
                         <Button variant={'outline'} onClick={onClose}>

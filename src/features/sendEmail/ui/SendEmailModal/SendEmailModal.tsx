@@ -1,6 +1,7 @@
 import { FC, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { sendEmail } from '@/shared/api';
 import { AlertModal, Button, Input, Modal } from '@/shared/ui';
 import { Checkbox } from '@/shared/ui/Checkbox';
 import { Keyboard } from '@/shared/ui/Keyboard';
@@ -11,23 +12,43 @@ interface ISendEmailModalProps {
     isOpen: boolean;
     onClose: () => void;
     onPrint: () => void;
+    origin: boolean;
+    decorative: boolean;
 }
 
-export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose, onPrint }) => {
+export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose, onPrint, origin, decorative }) => {
     const [alertState, setAlertState] = useState<'none' | 'success' | 'error'>('none');
     const [checked, setChecked] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
-    const onSubmit = () => {
-        if (!checked || !inputRef.current?.value.trim()) return;
-        onClose();
-        setAlertState('error');
+    const onSubmit = async () => {
+        const value = inputRef.current?.value.trim();
+        if (!checked || !value) return;
+
+        try {
+            setIsLoading(true);
+            await sendEmail({ address: value, origin, decorative });
+            setAlertState('success');
+        } catch (error) {
+            console.error(error);
+            setAlertState('error');
+        } finally {
+            setIsLoading(false);
+            onClose();
+        }
     };
 
     return (
         <>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal
+                isOpen={isOpen}
+                onClose={() => {
+                    if (isLoading) return;
+                    onClose();
+                }}
+            >
                 <div className={styles.modalBody}>
                     <h3>введите ваш e-mail</h3>
                     <Input placeholder={'Email'} ref={inputRef} autoFocus />
@@ -43,10 +64,10 @@ export const SendEmailModal: FC<ISendEmailModalProps> = ({ isOpen, onClose, onPr
                         className={styles.checkbox}
                     />
                     <div className={styles.buttons}>
-                        <Button variant={'outline'} onClick={onClose}>
+                        <Button variant={'outline'} onClick={onClose} disabled={isLoading}>
                             Назад
                         </Button>
-                        <Button theme={'accent'} onClick={onSubmit}>
+                        <Button theme={'accent'} onClick={onSubmit} disabled={isLoading}>
                             Отправить
                         </Button>
                     </div>

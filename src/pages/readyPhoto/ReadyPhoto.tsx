@@ -156,11 +156,14 @@ export const ReadyPhoto = () => {
                 isOpen={modalState === 'print'}
                 onClose={() => setModalState('none')}
                 onEmail={() => setModalState('email')}
+                currentImage={photo.currentImage}
             />
             <SendEmailModal
                 isOpen={modalState === 'email'}
                 onClose={() => setModalState('none')}
                 onPrint={() => setModalState('print')}
+                origin={photo.origin}
+                decorative={photo.decorative}
             />
         </>
     );
