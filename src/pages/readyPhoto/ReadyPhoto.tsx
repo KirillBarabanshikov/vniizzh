@@ -1,17 +1,101 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { PrintModal } from '@/features/print';
 import { SendEmailModal } from '@/features/sendEmail';
+import { generateFrame, generatePhoto } from '@/shared/api';
 import BackIcon from '@/shared/assets/icons/back.svg?react';
-import { Button, Switch } from '@/shared/ui';
+import { API_URL } from '@/shared/consts';
+import { AlertModal, Button, Loader, Switch } from '@/shared/ui';
 
 import styles from './ReadyPhoto.module.scss';
 
 export const ReadyPhoto = () => {
-    const [modalState, setModalState] = useState<'none' | 'print' | 'email'>('none');
-
+    const [modalState, setModalState] = useState<'none' | 'print' | 'email' | 'loading' | 'error'>('none');
+    const location = useLocation();
     const navigate = useNavigate();
+    const originalImage = (location.state as string) || '';
+
+    const [photo, setPhoto] = useState<{
+        currentImage: string;
+        originalImageWithFrame: string;
+        generatedImage: string;
+        generatedImageWithFrame: string;
+        origin: boolean;
+        decorative: boolean;
+    }>({
+        currentImage: originalImage,
+        originalImageWithFrame: '',
+        generatedImage: '',
+        generatedImageWithFrame: '',
+        origin: true,
+        decorative: false,
+    });
+
+    const handleToggleFrame = async () => {
+        if (photo.decorative) {
+            return setPhoto((prevState) => ({
+                ...prevState,
+                currentImage: prevState.origin ? originalImage : prevState.generatedImage,
+                decorative: false,
+            }));
+        }
+
+        try {
+            setModalState('loading');
+            const { generatedImage } = await generateFrame({ origin: photo.origin });
+            setPhoto((prevState) => ({
+                ...prevState,
+                currentImage: generatedImage,
+                originalImageWithFrame: prevState.origin ? generatedImage : prevState.originalImageWithFrame,
+                generatedImageWithFrame: prevState.origin ? prevState.generatedImageWithFrame : generatedImage,
+                decorative: true,
+            }));
+            setModalState('none');
+        } catch (error) {
+            console.error(error);
+            setModalState('error');
+        }
+    };
+
+    const handleToggleGenerate = async () => {
+        if (!photo.origin) {
+            return setPhoto((prevState) => ({
+                ...prevState,
+                currentImage: prevState.decorative ? prevState.originalImageWithFrame : originalImage,
+                origin: true,
+            }));
+        }
+
+        try {
+            setModalState('loading');
+            const { generatedImage } = await generatePhoto();
+
+            if (photo.decorative) {
+                const { generatedImage: generatedImageWithFrame } = await generateFrame({ origin: false });
+                setPhoto((prevState) => ({
+                    ...prevState,
+                    currentImage: generatedImageWithFrame,
+                    generatedImage: generatedImage,
+                    generatedImageWithFrame: generatedImageWithFrame,
+                    origin: false,
+                    decorative: true,
+                }));
+            } else {
+                setPhoto((prevState) => ({
+                    ...prevState,
+                    currentImage: generatedImage,
+                    generatedImage: generatedImage,
+                    origin: false,
+                    decorative: false,
+                }));
+            }
+            setModalState('none');
+        } catch (error) {
+            console.error(error);
+            setModalState('error');
+        }
+    };
 
     return (
         <>
@@ -30,8 +114,12 @@ export const ReadyPhoto = () => {
                     <div className={styles.photoActions}>
                         <div className={styles.title}>Редактирование фотографии</div>
                         <div className={styles.switchs}>
-                            <Switch isOn={true} onClick={() => {}} label={'Рамка'} />
-                            <Switch isOn={false} onClick={() => {}} label={'Обработка нейросетью'} />
+                            <Switch isOn={photo.decorative} onClick={handleToggleFrame} label={'Рамка'} />
+                            <Switch
+                                isOn={!photo.origin}
+                                onClick={handleToggleGenerate}
+                                label={'Обработка нейросетью'}
+                            />
                         </div>
                         <div className={styles.buttons}>
                             <Button theme={'accent'} size={'lg'} onClick={() => setModalState('print')}>
@@ -43,13 +131,27 @@ export const ReadyPhoto = () => {
                         </div>
                     </div>
                     <div className={styles.photo}>
-                        <img src='/images/image.png' alt='photo' />
+                        <img src={`${API_URL}/${photo.currentImage}?${Date.now()}`} alt='photo' />
                         <Button className={styles.button} onClick={() => navigate('/')}>
                             Попробовать снова
                         </Button>
                     </div>
                 </div>
             </div>
+            <Loader isLoading={modalState === 'loading'} subtitle={'Пожалуйста,подождите...'} variant={'lg'} />
+            <AlertModal
+                isOpen={modalState === 'error'}
+                isError
+                title={'Произошла ошибка'}
+                subtitle={
+                    'К сожалению, сейчас программа не может обработать ваш снимок, вернитесь назад и попробуйте другую опцию'
+                }
+                actions={
+                    <Button theme={'accent'} onClick={() => setModalState('none')}>
+                        Назад
+                    </Button>
+                }
+            />
             <PrintModal
                 isOpen={modalState === 'print'}
                 onClose={() => setModalState('none')}

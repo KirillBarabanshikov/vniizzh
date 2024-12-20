@@ -11,12 +11,13 @@ interface ILoaderProps {
     isLoading: boolean;
     title?: string;
     subtitle?: string;
+    variant?: 'sm' | 'lg';
 }
 
-export const Loader: FC<ILoaderProps> = ({ isLoading, title, subtitle }) => {
+export const Loader: FC<ILoaderProps> = ({ isLoading, title, subtitle, variant = 'sm' }) => {
     return (
-        <Modal isOpen={isLoading}>
-            <div className={styles.body}>
+        <Modal isOpen={isLoading} style={{ padding: variant === 'sm' ? '80px' : '35px' }}>
+            <div className={clsx(styles.body, styles[variant])}>
                 <motion.div
                     animate={{ rotate: [0, 360] }}
                     transition={{
