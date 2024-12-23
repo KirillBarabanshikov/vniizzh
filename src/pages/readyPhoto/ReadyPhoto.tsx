@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { PrintModal } from '@/features/print';
 import { SendEmailModal } from '@/features/sendEmail';
 import { generateFrame, generatePhoto } from '@/shared/api';
 import BackIcon from '@/shared/assets/icons/back.svg?react';
-import { API_URL } from '@/shared/consts';
+import { API_URL, INACTIVITY_TIMEOUT } from '@/shared/consts';
 import { AlertModal, Button, Loader, Switch } from '@/shared/ui';
 
 import styles from './ReadyPhoto.module.scss';
@@ -15,6 +15,7 @@ export const ReadyPhoto = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const originalImage = (location.state as string) || '';
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     const [photo, setPhoto] = useState<{
         currentImage: string;
@@ -96,6 +97,34 @@ export const ReadyPhoto = () => {
             setModalState('error');
         }
     };
+
+    const resetTimer = () => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
+        timerRef.current = setTimeout(() => {
+            navigate('/');
+        }, INACTIVITY_TIMEOUT * 1000);
+    };
+
+    useEffect(() => {
+        window.addEventListener('click', resetTimer);
+        resetTimer();
+
+        if (modalState === 'loading') {
+            window.removeEventListener('click', resetTimer);
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        }
+
+        return () => {
+            window.removeEventListener('click', resetTimer);
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
+    }, [modalState]);
 
     return (
         <>
