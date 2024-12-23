@@ -16,7 +16,6 @@ export const CameraFeed: FC<ICameraFreedProps> = ({ videoRef, className }) => {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: {
-                        // aspectRatio: 16 / 9,
                         deviceId: DEVICE_ID,
                     },
                 });

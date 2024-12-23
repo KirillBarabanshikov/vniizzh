@@ -160,8 +160,8 @@ export const ReadyPhoto = () => {
                         </div>
                     </div>
                     <div className={styles.photo}>
-                        <img src={`${API_URL}/${photo.currentImage}?${Date.now()}`} alt='photo' />
-                        <Button className={styles.button} onClick={() => navigate('/')}>
+                        <img src={`${API_URL}/${photo.currentImage}`} alt='photo' />
+                        <Button className={styles.button} onClick={() => navigate('/create-photo')}>
                             Попробовать снова
                         </Button>
                     </div>
