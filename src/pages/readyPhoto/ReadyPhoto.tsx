@@ -16,6 +16,7 @@ export const ReadyPhoto = () => {
     const navigate = useNavigate();
     const originalImage = (location.state as string) || '';
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const imageRef = useRef<HTMLImageElement>(null);
 
     const [photo, setPhoto] = useState<{
         currentImage: string;
@@ -52,7 +53,9 @@ export const ReadyPhoto = () => {
                 generatedImageWithFrame: prevState.origin ? prevState.generatedImageWithFrame : generatedImage,
                 decorative: true,
             }));
-            setModalState('none');
+            imageRef.current!.onload = () => {
+                setModalState('none');
+            };
         } catch (error) {
             console.error(error);
             setModalState('error');
@@ -61,11 +64,31 @@ export const ReadyPhoto = () => {
 
     const handleToggleGenerate = async () => {
         if (!photo.origin) {
-            return setPhoto((prevState) => ({
-                ...prevState,
-                currentImage: prevState.decorative ? prevState.originalImageWithFrame : originalImage,
-                origin: true,
-            }));
+            if (photo.decorative) {
+                try {
+                    setModalState('loading');
+                    const { generatedImage } = await generateFrame({ origin: true });
+                    setPhoto((prevState) => ({
+                        ...prevState,
+                        currentImage: generatedImage,
+                        origin: true,
+                        decorative: true,
+                    }));
+                    imageRef.current!.onload = () => {
+                        setModalState('none');
+                    };
+                } catch (error) {
+                    console.error(error);
+                    setModalState('error');
+                }
+            } else {
+                setPhoto((prevState) => ({
+                    ...prevState,
+                    currentImage: prevState.decorative ? prevState.originalImageWithFrame : originalImage,
+                    origin: true,
+                }));
+            }
+            return;
         }
 
         try {
@@ -91,7 +114,9 @@ export const ReadyPhoto = () => {
                     decorative: false,
                 }));
             }
-            setModalState('none');
+            imageRef.current!.onload = () => {
+                setModalState('none');
+            };
         } catch (error) {
             console.error(error);
             setModalState('error');
@@ -160,7 +185,7 @@ export const ReadyPhoto = () => {
                         </div>
                     </div>
                     <div className={styles.photo}>
-                        <img src={`${API_URL}/${photo.currentImage}`} alt='photo' />
+                        <img src={`${API_URL}/${photo.currentImage}`} alt='photo' ref={imageRef} />
                         <Button className={styles.button} onClick={() => navigate('/create-photo')}>
                             Попробовать снова
                         </Button>
