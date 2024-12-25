@@ -2,5 +2,13 @@
     display: flex;
     align-items: center;
     gap: 88px;
-    padding: 60px 60px 60px 135px;
+    padding: 60px 60px 60px 87px;
+
+    .timerWrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 246px;
+    }
 }

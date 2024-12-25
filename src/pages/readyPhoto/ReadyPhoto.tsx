@@ -192,7 +192,7 @@ export const ReadyPhoto = () => {
                     </div>
                 </div>
             </div>
-            <Loader isLoading={modalState === 'loading'} subtitle={'Пожалуйста,подождите...'} variant={'lg'} />
+            <Loader isLoading={modalState === 'loading'} subtitle={'Пожалуйста, подождите...'} variant={'lg'} />
             <AlertModal
                 isOpen={modalState === 'error'}
                 isError
